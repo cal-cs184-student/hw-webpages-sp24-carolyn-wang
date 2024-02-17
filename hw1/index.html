@@ -36,6 +36,7 @@
 
   <div>
 
+    <hr>
     <h2 align="middle">Overview</h2>
     <p><i>Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole.
         Share your thoughts on what interesting things you've learned from completing the homework.</i></p>
@@ -48,6 +49,7 @@
 
     <br>
 
+    <hr>
     <h2 align="middle">Section I: Rasterization</h2>
     <h3 align="middle">Part 1: Rasterizing single-color triangles</h3>
     <p><i>Walk through how you rasterize triangles in your own words.
@@ -69,10 +71,11 @@
     <p><i>Show a png screenshot of basic/test4.svg with the default viewing parameters and with the pixel inspector
         centered on an interesting part of the scene.</i></p>
 
-    <img src="./images/task1.png" align="middle" width="90%"/>
-    <img src="./images/task1_zoom.png" align="middle" width="90%"/>
+    <img src="./images/task1.png" align="middle" width="90%" />
+    <img src="./images/task1_zoom.png" align="middle" width="90%" />
 
 
+    <hr>
     <h3 align="middle">Part 2: Antialiasing triangles</h3>
 
     <p><i>Walk through your supersampling algorithm and data structures. Why is supersampling useful? What modifications
@@ -99,28 +102,31 @@
         Show png screenshots of basic/test4.svg with the default viewing parameters and sample rates 1, 4, and 16 to
         compare them side-by-side. Position the pixel inspector over an area that showcases the effect dramatically; for
         example, a very skinny triangle corner. Explain why these results are observed.</i></p>
-        <p>For the very skinny triangle corners, lower sample rates will undersample the color and leave sparse corners. By increasing the sample rate then producing an averaged color, the triangles for higher sample rates will have more accurate yet slightly blurred corners. </p>
+    <p>For the very skinny triangle corners, lower sample rates will undersample the color and leave sparse corners. By
+      increasing the sample rate then producing an averaged color, the triangles for higher sample rates will have more
+      accurate yet slightly blurred corners. </p>
 
-        <p><i>Sample Rate 1</i></p>
-        <img src="./images/task2_1.png" align="middle" width="90%" />
-        <img src="./images/task2_1_zoom.png" align="middle" width="90%" />
+    <p><i>Sample Rate 1</i></p>
+    <img src="./images/task2_1.png" align="middle" width="90%" />
+    <img src="./images/task2_1_zoom.png" align="middle" width="90%" />
 
-        <hr>
+    <hr>
 
-        <p><i>Sample Rate 4</i></p>
-        <img src="./images/task2_4.png" align="middle" width="90%" />
-        <img src="./images/task2_4_zoom.png" align="middle" width="90%" />
-      
-        <hr>
+    <p><i>Sample Rate 4</i></p>
+    <img src="./images/task2_4.png" align="middle" width="90%" />
+    <img src="./images/task2_4_zoom.png" align="middle" width="90%" />
 
-        <p><i>Sample Rate 16</i></p>
-        <img src="./images/task2_16.png" align="middle" width="90%" />
-        <img src="./images/task2_16_zoom.png" align="middle" width="90%" />
-      
+    <hr>
 
+    <p><i>Sample Rate 16</i></p>
+    <img src="./images/task2_16.png" align="middle" width="90%" />
+    <img src="./images/task2_16_zoom.png" align="middle" width="90%" />
 
 
 
+
+
+    <hr>
     <h3 align="middle">Part 3: Transforms</h3>
     <p><i>
         Create an updated version of svg/transforms/robot.svg with cubeman doing something more interesting, like waving
@@ -133,34 +139,117 @@
     </p>
 
 
+    <hr>
     <h2 align="middle">Section II: Sampling</h2>
 
     <h3 align="middle">Part 4: Barycentric coordinates</h3>
-    <p><i>Explain barycentric coordinates in your own words and use an image to aid you in your explanation. One idea is to use a svg file that plots a single triangle with one red, one green, and one blue vertex, which should produce a smoothly blended color triangle.</i></p>
+    <p><i>Explain barycentric coordinates in your own words and use an image to aid you in your explanation. One idea is
+        to use a svg file that plots a single triangle with one red, one green, and one blue vertex, which should
+        produce a smoothly blended color triangle.</i></p>
 
-    <p>The barycentric coordinates are a way to describe any point within a triangle as a weighted average of the triangle's vertices. The color at each pixel is calculated pasted on the areas of subtriangles formed by the point and the vertices of the main triangle. More specifically, the the interpolation formula color = alpha * c0 + beta * c1 + gamma * c2 blends the vertex colors based on the point's position within the triangle.
-      <br>In the image below, the method produces a smoothly blended triangle with one purple, one pink, and one orange vertex. 
-      </p>
+    <p>The barycentric coordinates are a way to describe any point within a triangle as a weighted average of the
+      triangle's vertices. The color at each pixel is calculated pasted on the areas of subtriangles formed by the point
+      and the vertices of the main triangle. More specifically, the the interpolation formula color = alpha * c0 + beta
+      * c1 + gamma * c2 blends the vertex colors based on the point's position within the triangle.
+      <br>In the image below, the method produces a smoothly blended triangle with one purple, one pink, and one orange
+      vertex.
+    </p>
 
-      <img src="./images/task4_tri_demo.png" align="middle" width="90%" />
+    <img src="./images/task4_tri_demo.png" align="middle" width="90%" />
 
 
-      <p><i>Show a png screenshot of svg/basic/test7.svg with default viewing parameters and sample rate 1. If you make any additional images with color gradients, include them.</i></p>
-      <img src="./images/task4.png" align="middle" width="90%" />
+    <p><i>Show a png screenshot of svg/basic/test7.svg with default viewing parameters and sample rate 1. If you make
+        any additional images with color gradients, include them.</i></p>
+    <img src="./images/task4.png" align="middle" width="90%" />
 
+    <hr>
     <h3 align="middle">Part 5: "Pixel sampling" for texture mapping</h3>
 
+    <p><i>Explain pixel sampling in your own words and describe how you implemented it to perform texture mapping.
+        Briefly discuss the two different pixel sampling methods, nearest and bilinear.</i></p>
 
+    <p>Pixel sampling is used to map textures and designs onto 3D model. Since a one-to-one mapping of isn’t possible
+      between the texel and screen area (due to difference in resolution and perspective), pixel sampling is necessary
+      to decide which texels from a texture image contribute to the color of a specific pixel on the rendered image.
+      <br>To implement pixel sampling for texture mapping, I first determine which part of the texture corresponds to a
+      screen pixel. Then, I used a sampling method to transfer the color from the texture.
+      <br>The first sampling method is Nearest Neighbor Sampling. The algorithm looks at the texture coordinates
+      corresponding to each pixel and selects the color of the nearest texel. This approach is simple but produces lower
+      quality images since it doesn’t take into account the colors of surrounding texels.
+      <br>The second sampling method is Bilinear filtering. Rather than selecting the nearest texel's color, bilinear
+      filtering calculates color from the weighted average of the four nearest texels to the pixel's corresponding
+      texture coordinates. The final color is a blend smoothly transitions between texels.
+    </p>
+
+    <p><i>Check out the svg files in the svg/texmap/ directory. Use the pixel inspector to find a good example of where
+        bilinear sampling clearly defeats nearest sampling. Show and compare four png screenshots using nearest sampling
+        at 1 sample per pixel, nearest sampling at 16 samples per pixel, bilinear sampling at 1 sample per pixel, and
+        bilinear sampling at 16 samples per pixel.</i></p>
+    <p><i>Comment on the relative differences. Discuss when there will be a large difference between the two methods and
+        why.</i></p>
+
+    <p>Nearest Sampling; Sample Rate 1</p>
+    <img src="./images/task5_nearpixel_1.png" align="middle" width="90%" />
+    <p>Nearest Sampling; Sample Rate 16</p>
+    <img src="./images/task5_nearpixel_16.png" align="middle" width="90%" />
+
+    <p>Bilinear Sampling; Sample Rate 1</p>
+    <img src="./images/task5_bilinear_1.png" align="middle" width="90%" />
+    <p>Bilinear Sampling; Sample Rate 16</p>
+    <img src="./images/task5_bilinear_16.png" align="middle" width="90%" />
+    <hr>
+
+    <p>Bilinear sampling performs better than nearest sampling because it calculates the output pixel value using linear
+      interpolation between the four nearest pixels, resulting in a smoother transition between colors and textures. On
+      the other hand, nearest neighbor sampling only selects the color of the closest pixel. This can lead to abrupt
+      changes in color and result in a more pixelated image, especially when there is extreme change in angle or
+      perspective like the examples above. </p>
     <h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
+    <p><i>Explain level sampling in your own words and describe how you implemented it for texture mapping.</i></p>
+    <p>Level sampling is a texture mapping method that selects the appropriate amount of detail based on the distance of
+      the surface from the viewer
+      <br>To implement this, I first generate progressively downsampeld mipmaps from the original high resolution
+      texture. During rendering, I calculate level of detail based on the distance of the textured object from the
+      camera by calculating the ratio of texture pixels (texels) to screen pixels and selecting the mipmap level that
+      most closely matches this ratio.
+    </p>
+    <br>
+    <p><i>You can now adjust your sampling technique by selecting pixel sampling, level sampling, or the number of
+        samples per pixel. Describe the tradeoffs between speed, memory usage, and antialiasing power between the three
+        various techniques.</i></p>
+    <p>1. Nearest Pixel Sampling
+      <br>Fast speed since you only need to select the nearest pixel
+      <br>Low memory usage
+      <br>Poor antialiasing ability
+      <br>
+      <br>2. Mipmap:
+      <br>Moderate speed since method needs to select the appropriate mipmap level
+      <br>High memory usage since we need to store multiple versions of the texture at different resolutions.
+      <br>Reduces aliasing and provides smoother transitions
+      <br>
+
+      <br>3. Supersampling:
+      <br>Slowest speed since method needs sample multiple times per pixel and then averaging the results
+      <br>Highest memory usage since it needs to render the image at several times the original resolution before
+      downsampling
+      <br>Very good antialiasing results since averaging multiple samples per edges smooths edges and textures.
+    </p>
+
+    <br>
+    <p><i>Using a png file you find yourself, show us four versions of the image, using the combinations of L_ZERO and
+        P_NEAREST, L_ZERO and P_LINEAR, L_NEAREST and P_NEAREST, as well as L_NEAREST and P_LINEAR.</i></p>
 
 
-
-    <h2 align="middle">Section III: Art Competition</h2>
-    <p>If you are not participating in the optional art competition, don't worry about this section!</p>
-
-    <h3 align="middle">Part 7: Draw something interesting!</h3>
-
-
+        <p>L_ZERO and P_NEAREST</p>
+        <img src="./images/task6_lz_pn.png" align="middle" width="90%" />
+        <p>L_ZERO and P_LINEAR</p>
+        <img src="./images/task6_lz_pl.png" align="middle" width="90%" />
+    
+        <p> L_NEAREST and P_NEAREST</p>
+        <img src="./images/task6_ln_pn.png" align="middle" width="90%" />
+        <p>L_NEAREST and P_LINEAR</p>
+        <img src="./images/task6_ln_pl.png" align="middle" width="90%" />
+        <hr>
 
     <!-- <p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a
       column in that row. You might find this useful for framing and showing your result images in an organized fashion.
