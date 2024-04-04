@@ -1,7 +1,286 @@
-<html>
-	<head>
-	</head>
-	<body>
-		Homework 4 index.html here
-	</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <style>
+    body {
+      padding: 100px;
+      width: 1000px;
+      margin: auto;
+      text-align: left;
+      font-weight: 300;
+      font-family: 'Open Sans', sans-serif;
+      color: #121212;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    h2 {
+      padding-top: 80px;
+    }
+
+    h3 {
+      padding-top: 40px;
+    }
+
+    figcaption {
+      font-style: italic;
+    }
+  </style>
+  <title>CS 184 Mesh Editor</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2017</h1>
+  <h1 align="middle">Project 4: Cloth Simulator</h1>
+  <h2 align="middle">Carolyn Wang, CS184</h2>
+
+  <br><br>
+
+  <div>
+
+    <h2 align="middle">Overview</h2>
+<p>In this project, I coded various aspects of cloth simulation: different constraints to the cloth's structure; varying the spring constant, density, and damping; and implementing shading and texture mapping techniques. For realistic rendering, I implemented shader programming which uses vertex and fragment shaders to achieve dynamic lighting and material effects. I also implemented the Blinn-Phong shading model to illustrate the interaction of light with surfaces. Finally, I experimented cloth interaction different rendering techniques for new textures and patterns. I most enjoyed implementing the mirror effect with the cube environment map because I thought it looked the most visually impressive. </p>
+    <h2 align="middle">Part 1</h2>
+    <h3>Take some screenshots of scene/pinned2.json from a viewing angle where you can clearly see the cloth wireframe
+      to show the structure of your point masses and springs.</h3>
+
+    <img src="images/part1/clear_view.png" align="middle" width="100%" />
+
+    <h3>Show us what the wireframe looks like (1) without any shearing constraints, (2) with only shearing constraints,
+      and (3) with all constraints.</h3>
+
+    <img src="images/part1/without_sheering.png" align="middle" width="100%" />
+    <figcaption>(1) without any shearing constraints</figcaption>
+
+
+    <img src="images/part1/only_sheering.png" align="middle" width="100%" />
+    <figcaption>(2) with only shearing constraints</figcaption>
+
+
+    <img src="images/part1/all_constraints.png" align="middle" width="100%" />
+    <figcaption>(3) with all constraints</figcaption>
+
+    <h2 align="middle">Part 2</h2>
+    <h3>Describe the effects of changing the spring constant ks; how does the cloth behave from start to rest with a
+      very low ks? A high ks?</h3>
+    <p>With a very low ks, the cloth has much finer wrinkles and folds of fabric. This is most noticeable at the top
+      near the two pinned points where there are many more U curves of fabric bunched closely together. Additionally,
+      when interacting with the fabric the fabric is much more reactive and “jumps” a lot more.
+
+    </p>
+    <img src="images/part2/ks_50.gif" align="middle" width="100%" />
+    <figcaption>low ks (ks = 50)</figcaption>
+    <p>
+      With a high ks, the cloth is much more stiff. There is only one noticable U curve of fabric near the top that goes
+      between the two pinned points. The rest of the grid is almost entirely non-reactive to interactions.
+    </p>
+    <img src="images/part2/ks_50000.gif" align="middle" width="100%" />
+    <figcaption>high ks (ks = 50000)</figcaption>
+    <h3>What about for density?</h3>
+    <p>
+      With lower densities, the curve of fabric at the top doesn’t hang quite as loose. If the density is set to 1, the
+      fabric is nearly a complete square with only a slight dip in the fabric at the top.
+    </p>
+    <img src="images/part2/density_1.gif" align="middle" width="100%" />
+    <figcaption>low density (density = 1)</figcaption>
+    <p>
+      With higher densities, the fabric hangs down much more loosely.
+
+    </p>
+    <img src="images/part2/density_100.gif" align="middle" width="100%" />
+    <figcaption>high density (density = 100)</figcaption>
+    <h3>What about for damping?
+
+    </h3>
+    <p> With lower damping, the fabric falls down very swiftly and swings around a lot.
+    </p>
+    <img src="images/part2/damp_0.gif" align="middle" width="100%" />
+    <figcaption>low damping (damping = 0)</figcaption>
+    <p>
+      With higher damping, the fabric falls down much more slowly and stays still once it flattens out.
+    </p>
+    <img src="images/part2/damp_1.gif" align="middle" width="100%" />
+    <figcaption>high damping (damping = 1)</figcaption>
+
+    <h3>Show us a screenshot of your shaded cloth from scene/pinned4.json in its final resting state! If you choose to
+      use different parameters than the default ones, please list them.</h3>
+
+    <img src="images/part2/pin4.png" align="middle" width="100%" />
+
+
+    <h2>Part 3</h2>
+    <h3>Show us screenshots of your shaded cloth from scene/sphere.json in its final resting state on the sphere using
+      the default ks = 5000 as well as with ks = 500 and ks = 50000. Describe the differences in the results.</h3>
+    <p>With a lower ks, the fabric is more stiff and has more structure. It juts outwards in a triangle at the top of
+      the ball instead of laying flat and smooth. With higher ks, the fabric falls more loosely with less structure.</p>
+    <img src="images/part3/ks5000.png" align="middle" width="100%" />
+    <figcaption>ks = 5000 (default)</figcaption>
+
+    <img src="images/part3/ks500.png" align="middle" width="100%" />
+    <figcaption>ks = 500</figcaption>
+
+    <img src="images/part3/ks50000.png" align="middle" width="100%" />
+    <figcaption>ks = 50000</figcaption>
+
+
+    <h3>Show us a screenshot of your shaded cloth lying peacefully at rest on the plane. If you haven't by now, feel
+      free to express your colorful creativity with the cloth! (You will need to complete the shaders portion first to
+      show custom colors.)</h3>
+    <img src="images/part3/plane.png" align="middle" width="100%" />
+
+
+
+    <h2>Part 4</h2>
+    <h3>Show us at least 3 screenshots that document how your cloth falls and folds on itself, starting with an early,
+      initial self-collision and ending with the cloth at a more restful state (even if it is still slightly bouncy on
+      the ground).</h3>
+
+    <img src="images/part4/Screenshot 2024-04-03 at 3.00.36 AM.png" align="middle" width="80%" />
+    <img src="images/part4/Screenshot 2024-04-03 at 3.00.53 AM.png" align="middle" width="80%" />
+    <img src="images/part4/Screenshot 2024-04-03 at 3.01.01 AM.png" align="middle" width="80%" />
+
+    <h3>Vary the density as well as ks and describe with words and screenshots how they affect the behavior of the cloth
+      as it falls on itself.</h3>
+
+    <p>With high density, the cloth falls directly vertically and crinkles at the bottom. The wrinkles are very fine and
+      the cloth keeps moving in a narrow roll of fabric after falling. </p>
+
+    <figcaption>high density (density = 500)</figcaption>
+
+    <img src="images/part4/density_500/Screenshot 2024-04-03 at 1.25.35 PM.png" align="middle" width="80%" />
+    <img src="images/part4/density_500/Screenshot 2024-04-03 at 1.25.43 PM.png" align="middle" width="80%" />
+    <img src="images/part4/density_500/Screenshot 2024-04-03 at 1.25.49 PM.png" align="middle" width="80%" />
+    <img src="images/part4/density_500/Screenshot 2024-04-03 at 1.25.55 PM.png" align="middle" width="80%" />
+
+
+    <p>In contrast with low density, the fabric has much larger and voluminous folds. After falling onto the plane, the
+      fabric keeps on unrolling into a flat piece of fabric with only </p>
+
+    <figcaption>low density (density = 1)</figcaption>
+
+    <img src="images/part4/density_1/Screenshot 2024-04-03 at 1.38.19 PM.png" align="middle" width="80%" />
+    <img src="images/part4/density_1/Screenshot 2024-04-03 at 1.38.30 PM.png" align="middle" width="80%" />
+    <img src="images/part4/density_1/Screenshot 2024-04-03 at 1.39.53 PM.png" align="middle" width="80%" />
+
+    <p>With low ks, the effect is similar to high density. The fabric has much more wrinkles and folds into itself into
+      a roll on the plane before unrolling to flatten out a bit. </p>
+
+    <figcaption>low ks (ks = 500)</figcaption>
+    <img src="images/part4/ks_500/Screenshot 2024-04-03 at 1.42.29 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_500/Screenshot 2024-04-03 at 1.43.15 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_500/Screenshot 2024-04-03 at 1.43.26 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_500/Screenshot 2024-04-03 at 1.43.42 PM.png" align="middle" width="80%" />
+
+
+    <p>With high ks, the effect is similar to low density. The folds are much larger and then fabric is not as wrinkled.
+      After a long time the fabric flattens out completely onto the plane. </p>
+
+    <figcaption>high ks (ks = 50000)</figcaption>
+    <img src="images/part4/ks_50000/Screenshot 2024-04-03 at 2.23.44 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_50000/Screenshot 2024-04-03 at 2.24.05 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_50000/Screenshot 2024-04-03 at 2.24.16 PM.png" align="middle" width="80%" />
+    <img src="images/part4/ks_50000/Screenshot 2024-04-03 at 2.34.33 PM.png" align="middle" width="80%" />
+
+
+    <h2>Part 5</h2>
+    <h3>Explain in your own words what is a shader program and how vertex and fragment shaders work together to create
+      lighting and material effects.</h3>
+
+    <p>A shader program creates dynamic lighting and material effects for 3D models and scenes. The two shaders that
+      work together are vertex shaders and fragment shaders. The vertex shader determines where vertices should be
+      placed in a scene by considering the position of the camera, the shape of the object, and how it should move or
+      rotate. After the vertex shader has arranged all the points, the fragment shader determines the color of each
+      pixel in the scene by considering the lighting of the scene and the material properties of the object. </p>
+
+    <h3>Explain the Blinn-Phong shading model in your own words. Show a screenshot of your Blinn-Phong shader outputting
+      only the ambient component, a screen shot only outputting the diffuse component, a screen shot only outputting the
+      specular component, and one using the entire Blinn-Phong model.</h3>
+
+    <p>The Blinn-Phong shading model is a way to make 3D computer graphics look more realistic by simulating the way light interacts with surfaces. It mathematiclaly simulates three types of light interactions on a surface – specular highlight, diffuse reflection, and ambient light. Adjusting the model parameters can make the surface appear smoother or rougher, shinier, or modify the overall shade of the object.</p>
+
+    <img src="images/part5/phong/ambient.png" align="middle" width="100%" />
+    <figcaption>Ambient</figcaption>
+
+    <img src="images/part5/phong/diffuse.png" align="middle" width="100%" />
+    <figcaption>Diffuse</figcaption>
+
+    <img src="images/part5/phong/specular.png" align="middle" width="100%" />
+    <figcaption>Specular</figcaption>
+
+    <img src="images/part5/phong/phong.png" align="middle" width="100%" />
+    <figcaption>Blinn-phong</figcaption>
+
+    <h3>
+      Show a screenshot of your texture mapping shader using your own custom texture by modifying the textures in /textures/.</h3>
+      <img src="images/part5/texture_1 copy.png" align="middle" width="60%" />
+      <figcaption>Custom texture</figcaption>
+
+      <img src="images/part5/texture.png" align="middle" width="100%" />
+      <figcaption>Texture mapping result</figcaption>
+
+      <h3>Show a screenshot of bump mapping on the cloth and on the sphere. Show a screenshot of displacement mapping on the sphere. Use the same texture for both renders. You can either provide your own texture or use one of the ones in the textures directory, BUT choose one that's not the default texture_2.png. Compare the two approaches and resulting renders in your own words. Compare how your the two shaders react to the sphere by changing the sphere mesh's coarseness by using -o 16 -a 16 and then -o 128 -a 128.</h3>
+
+      <p>Displacement mapping creates a more detailed representation of surface textures than bump mapping. The difference in coarseness is especially clear with the high quality renderings (-o 128 -a 128). Bump mapping is more coarse because it simulates texture details by manipulating the surface's normal during the lighting calculation, creating an illusion of depth. On the other hand, displacement mapping actually alters the model's geometry by displacing vertices to create real geometric changes. </p>
+      <br>
+      <p>Default test commands</p>
+      <img src="images/part5/bump_displacement default/bump_sphere.png" align="middle" width="100%" />
+      <figcaption>Bump sphere</figcaption>
+      
+      <img src="images/part5/bump_displacement default/bump_cloth.png" align="middle" width="100%" />
+      <figcaption>Bump cloth</figcaption>
+
+      <img src="images/part5/bump_displacement default/displacement_sphere.png" align="middle" width="100%" />
+      <figcaption>Displacement sphere</figcaption>
+
+
+      <img src="images/part5/bump_displacement default/displacement_cloth.png" align="middle" width="100%" />
+      <figcaption>Displacement cloth</figcaption>
+
+
+      <br>
+      <p>-f ../scene/sphere.json -o 16 -a 16</p>
+      <img src="images/part5/bump_displacement 16/bump_sphere.png" align="middle" width="100%" />
+      <figcaption>Bump sphere (-o 16 -a 16)</figcaption>
+      
+      <img src="images/part5/bump_displacement 16/bump_cloth.png" align="middle" width="100%" />
+      <figcaption>Bump cloth (-o 16 -a 16)</figcaption>
+
+      <img src="images/part5/bump_displacement 16/displacement_sphere.png" align="middle" width="100%" />
+      <figcaption>Displacement sphere (-o 16 -a 16)</figcaption>
+
+
+      <img src="images/part5/bump_displacement 16/displacement_cloth.png" align="middle" width="100%" />
+      <figcaption>Displacement cloth (-o 16 -a 16)</figcaption>
+
+      <br>
+      <p>-f ../scene/sphere.json -o 128 -a 128</p>
+      <img src="images/part5/bump_displacement 128/bump_sphere.png" align="middle" width="100%" />
+      <figcaption>Bump sphere (-o 128 -a 128)</figcaption>
+      
+      <img src="images/part5/bump_displacement 128/bump_cloth.png" align="middle" width="100%" />
+      <figcaption>Bump cloth (-o 128 -a 128)</figcaption>
+
+      <img src="images/part5/bump_displacement 128/displacement_sphere.png" align="middle" width="100%" />
+      <figcaption>Displacement sphere (-o 128 -a 128)</figcaption>
+
+
+      <img src="images/part5/bump_displacement 128/displacement_cloth.png" align="middle" width="100%" />
+      <figcaption>Displacement cloth (-o 128 -a 128)</figcaption>
+      
+      <h3>Show a screenshot of your mirror shader on the cloth and on the sphere.
+      </h3>
+      <img src="images/part5/mirror.png" align="middle" width="100%" />
+
+</body>
+
 </html>
